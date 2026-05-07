@@ -21,47 +21,58 @@ export default function Navbar() {
 
   return (
     <nav style={{
-      backgroundColor: '#ffffff',
-      padding: '0 32px',
-      height: '68px',
+      backgroundColor: 'rgba(255, 255, 255, 0.8)', // Frosted glass effect
+      backdropFilter: 'blur(12px)',               // Premium blur
+      WebkitBackdropFilter: 'blur(12px)',         // Safari support
+      padding: '0 60px',                          // Aligned with Hero text
+      height: '80px',                             // Slightly taller for premium feel
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'space-between',
-      position: 'sticky',
+      position: 'fixed',                          // Floats over video
       top: 0,
-      zIndex: 100,
-      boxShadow: '0 1px 4px rgba(0,0,0,0.08)',
-      borderBottom: '1px solid #e8e4dc'
+      left: 0,
+      right: 0,
+      zIndex: 1000,
+      boxShadow: '0 4px 30px rgba(0, 0, 0, 0.03)',
+      borderBottom: '1px solid rgba(201, 168, 76, 0.2)' // Subtle gold border
     }}>
 
-      {/* LOGO */}
+      {/* LOGO SECTION */}
       <div
         onClick={() => router.push('/')}
-        style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '10px' }}
+        style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '12px' }}
       >
         <div style={{
           backgroundColor: '#1d6a4e',
-          width: '36px',
-          height: '36px',
-          borderRadius: '8px',
+          width: '40px',
+          height: '40px',
+          borderRadius: '10px',
           display: 'flex',
           alignItems: 'center',
-          justifyContent: 'center'
+          justifyContent: 'center',
+          boxShadow: '0 4px 10px rgba(29, 106, 78, 0.2)'
         }}>
-          <span style={{ color: '#c9a84c', fontWeight: '800', fontSize: '16px' }}>I</span>
+          <span style={{ color: '#c9a84c', fontWeight: '900', fontSize: '18px' }}>I</span>
         </div>
         <div>
-          <div style={{ fontSize: '18px', fontWeight: '800', color: '#1d6a4e', letterSpacing: '1px' }}>
+          <div style={{ 
+            fontSize: '20px', 
+            fontWeight: '900', 
+            color: '#1d6a4e', 
+            letterSpacing: '1.5px',
+            lineHeight: '1'
+          }}>
             IHSAN
           </div>
-          <div style={{ fontSize: '10px', color: '#9ca3af', marginTop: '-2px' }}>
-            Platform Derma Masjid & Surau
+          <div style={{ fontSize: '10px', color: '#6b7280', fontWeight: '600', marginTop: '2px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+            Platform Derma Amanah
           </div>
         </div>
       </div>
 
       {/* NAV BUTTONS */}
-      <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+      <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
         {!role && (
           <>
             <button
@@ -70,11 +81,12 @@ export default function Navbar() {
                 background: 'transparent',
                 border: '1.5px solid #1d6a4e',
                 color: '#1d6a4e',
-                padding: '8px 18px',
-                borderRadius: '8px',
+                padding: '10px 22px',
+                borderRadius: '12px',
                 cursor: 'pointer',
-                fontSize: '13px',
-                fontWeight: '600'
+                fontSize: '14px',
+                fontWeight: '700',
+                transition: 'all 0.3s ease'
               }}
             >
               Daftar Masjid
@@ -85,11 +97,13 @@ export default function Navbar() {
                 background: '#1d6a4e',
                 border: 'none',
                 color: '#ffffff',
-                padding: '8px 18px',
-                borderRadius: '8px',
+                padding: '11px 24px',
+                borderRadius: '12px',
                 cursor: 'pointer',
-                fontSize: '13px',
-                fontWeight: '600'
+                fontSize: '14px',
+                fontWeight: '700',
+                boxShadow: '0 4px 12px rgba(29, 106, 78, 0.25)',
+                transition: 'all 0.3s ease'
               }}
             >
               Log Masuk
@@ -105,11 +119,11 @@ export default function Navbar() {
                 background: 'transparent',
                 border: '1.5px solid #1d6a4e',
                 color: '#1d6a4e',
-                padding: '8px 18px',
-                borderRadius: '8px',
+                padding: '10px 22px',
+                borderRadius: '12px',
                 cursor: 'pointer',
-                fontSize: '13px',
-                fontWeight: '600'
+                fontSize: '14px',
+                fontWeight: '700'
               }}
             >
               Dashboard
@@ -120,11 +134,11 @@ export default function Navbar() {
                 background: '#ef4444',
                 border: 'none',
                 color: '#fff',
-                padding: '8px 18px',
-                borderRadius: '8px',
+                padding: '11px 24px',
+                borderRadius: '12px',
                 cursor: 'pointer',
-                fontSize: '13px',
-                fontWeight: '600'
+                fontSize: '14px',
+                fontWeight: '700'
               }}
             >
               Log Keluar
@@ -140,11 +154,11 @@ export default function Navbar() {
                 background: 'transparent',
                 border: '1.5px solid #c9a84c',
                 color: '#c9a84c',
-                padding: '8px 18px',
-                borderRadius: '8px',
+                padding: '10px 22px',
+                borderRadius: '12px',
                 cursor: 'pointer',
-                fontSize: '13px',
-                fontWeight: '600'
+                fontSize: '14px',
+                fontWeight: '700'
               }}
             >
               Admin Panel
@@ -155,11 +169,11 @@ export default function Navbar() {
                 background: '#ef4444',
                 border: 'none',
                 color: '#fff',
-                padding: '8px 18px',
-                borderRadius: '8px',
+                padding: '11px 24px',
+                borderRadius: '12px',
                 cursor: 'pointer',
-                fontSize: '13px',
-                fontWeight: '600'
+                fontSize: '14px',
+                fontWeight: '700'
               }}
             >
               Log Keluar
