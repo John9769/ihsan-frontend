@@ -76,7 +76,9 @@ export default function CampaignCard({ campaign }) {
           marginBottom: '4px',
           letterSpacing: '0.5px'
         }}>
-          {campaign.premise?.type} {campaign.premise?.name}
+          {campaign.premise?.name?.toLowerCase().startsWith(campaign.premise?.type?.toLowerCase()) 
+  ? campaign.premise.name 
+  : `${campaign.premise?.type} ${campaign.premise?.name}`}
         </div>
 
         {/* TITLE */}
