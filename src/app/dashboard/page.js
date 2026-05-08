@@ -97,35 +97,39 @@ export default function Dashboard() {
     'RM ' + parseFloat(amount || 0).toLocaleString('ms-MY', { minimumFractionDigits: 2 })
 
   const totalCollected = campaigns.reduce((sum, c) => sum + (c.collected_amount || 0), 0)
-  const activeCampaigns = campaigns.filter(c => c.status === 'ACTIVE')
-  const completedCampaigns = campaigns.filter(c => c.status === 'COMPLETED')
+  const activeCount = campaigns.filter(c => c.status === 'ACTIVE').length
+  const completedCount = campaigns.filter(c => c.status === 'COMPLETED').length
 
   if (loading) return (
-    <main style={{ backgroundColor: '#f8f7f4', minHeight: '100vh', fontFamily: 'sans-serif' }}>
+    <main style={{ backgroundColor: '#fcfbf9', minHeight: '100vh', fontFamily: '"Plus Jakarta Sans", sans-serif' }}>
       <Navbar />
-      <p style={{ textAlign: 'center', padding: '80px', color: '#6b7280' }}>Memuatkan...</p>
+      <div style={{ paddingTop: '200px', textAlign: 'center', color: '#64748b', fontWeight: '600' }}>
+        Memuatkan data Dashboard...
+      </div>
     </main>
   )
 
   return (
-    <main style={{ backgroundColor: '#f8f7f4', minHeight: '100vh', fontFamily: 'sans-serif' }}>
+    <main style={{ backgroundColor: '#fdfdfc', minHeight: '100vh', fontFamily: '"Plus Jakarta Sans", sans-serif' }}>
       <Navbar />
 
-      <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '40px 24px' }}>
+      <div style={{ maxWidth: '1100px', margin: '0 auto', paddingTop: '120px', paddingBottom: '100px', paddingLeft: '24px', paddingRight: '24px' }}>
 
-        {/* HEADER */}
+        {/* TOP BAR */}
         <div style={{
           display: 'flex',
           justifyContent: 'space-between',
-          alignItems: 'center',
-          marginBottom: '32px'
+          alignItems: 'flex-end',
+          marginBottom: '40px',
+          borderBottom: '1px solid #f1f5f9',
+          paddingBottom: '24px'
         }}>
           <div>
-            <h1 style={{ fontSize: '24px', fontWeight: '800', color: '#1a1a1a', margin: '0 0 4px' }}>
+            <h1 style={{ fontSize: '32px', fontWeight: '900', color: '#0f2d1f', margin: '0 0 4px', letterSpacing: '-1.5px' }}>
               Dashboard
             </h1>
-            <p style={{ color: '#6b7280', fontSize: '14px', margin: 0 }}>
-              Selamat datang, {localStorage.getItem('ihsan_name')}
+            <p style={{ color: '#64748b', fontSize: '15px', fontWeight: '500' }}>
+              Selamat datang, <span style={{ color: '#1d6a4e', fontWeight: '700' }}>{localStorage.getItem('ihsan_name')}</span>
             </p>
           </div>
           <button
@@ -134,49 +138,49 @@ export default function Dashboard() {
               background: '#1d6a4e',
               color: '#fff',
               border: 'none',
-              padding: '12px 20px',
-              borderRadius: '10px',
+              padding: '14px 24px',
+              borderRadius: '12px',
               cursor: 'pointer',
               fontSize: '14px',
-              fontWeight: '700'
+              fontWeight: '800',
+              boxShadow: '0 10px 20px rgba(29, 106, 78, 0.2)'
             }}
           >
             + Kempen Baru
           </button>
         </div>
 
-        {/* STATS */}
+        {/* STATS ROW */}
         <div style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(3, 1fr)',
-          gap: '16px',
-          marginBottom: '32px'
+          gap: '24px',
+          marginBottom: '48px'
         }}>
           {[
-            { label: 'Jumlah Terkumpul', value: formatRM(totalCollected), color: '#1d6a4e' },
-            { label: 'Kempen Aktif', value: activeCampaigns.length, color: '#3b82f6' },
-            { label: 'Kempen Selesai', value: completedCampaigns.length, color: '#c9a84c' }
+            { label: 'Jumlah Terkumpul', value: formatRM(totalCollected), color: '#1d6a4e', bg: '#f0fdf4' },
+            { label: 'Kempen Aktif', value: activeCount, color: '#0284c7', bg: '#f0f9ff' },
+            { label: 'Kempen Selesai', value: completedCount, color: '#c9a84c', bg: '#fefce8' }
           ].map((stat, i) => (
             <div key={i} style={{
               backgroundColor: '#ffffff',
-              borderRadius: '12px',
-              padding: '20px 24px',
-              boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
-              border: '1px solid #e8e4dc'
+              borderRadius: '20px',
+              padding: '24px',
+              boxShadow: '0 4px 20px rgba(0,0,0,0.02)',
+              border: '1px solid #f1f5f9'
             }}>
-              <div style={{ fontSize: '13px', color: '#6b7280', marginBottom: '8px' }}>{stat.label}</div>
-              <div style={{ fontSize: '26px', fontWeight: '800', color: stat.color }}>{stat.value}</div>
+              <div style={{ fontSize: '13px', color: '#64748b', fontWeight: '700', marginBottom: '12px', textTransform: 'uppercase', letterSpacing: '1px' }}>{stat.label}</div>
+              <div style={{ fontSize: '28px', fontWeight: '900', color: stat.color }}>{stat.value}</div>
             </div>
           ))}
         </div>
 
-        {/* TABS */}
+        {/* TABS MENU */}
         <div style={{
           display: 'flex',
-          gap: '8px',
-          marginBottom: '24px',
-          borderBottom: '2px solid #e8e4dc',
-          paddingBottom: '0'
+          gap: '32px',
+          marginBottom: '32px',
+          borderBottom: '2px solid #f1f5f9'
         }}>
           {[
             { key: 'CAMPAIGNS', label: 'Kempen Saya' },
@@ -186,15 +190,16 @@ export default function Dashboard() {
               key={tab.key}
               onClick={() => setActiveTab(tab.key)}
               style={{
-                padding: '10px 20px',
+                padding: '12px 4px',
                 border: 'none',
-                borderBottom: activeTab === tab.key ? '2px solid #1d6a4e' : '2px solid transparent',
-                backgroundColor: 'transparent',
-                color: activeTab === tab.key ? '#1d6a4e' : '#6b7280',
-                fontWeight: activeTab === tab.key ? '700' : '500',
+                background: 'none',
+                borderBottom: activeTab === tab.key ? '3px solid #1d6a4e' : '3px solid transparent',
+                color: activeTab === tab.key ? '#1d6a4e' : '#94a3b8',
+                fontWeight: '800',
                 cursor: 'pointer',
-                fontSize: '14px',
-                marginBottom: '-2px'
+                fontSize: '15px',
+                marginBottom: '-2px',
+                transition: 'all 0.2s'
               }}
             >
               {tab.label}
@@ -202,364 +207,165 @@ export default function Dashboard() {
           ))}
         </div>
 
-        {/* CAMPAIGNS TAB */}
-        {activeTab === 'CAMPAIGNS' && (
-          <div>
+        {/* CONTENT AREA */}
+        {activeTab === 'CAMPAIGNS' ? (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
             {campaigns.length === 0 ? (
-              <div style={{
-                textAlign: 'center',
-                padding: '60px',
-                backgroundColor: '#ffffff',
-                borderRadius: '12px',
-                border: '1px solid #e8e4dc'
-              }}>
-                <div style={{ fontSize: '40px', marginBottom: '12px' }}>🕌</div>
-                <p style={{ color: '#6b7280', fontSize: '14px' }}>
-                  Belum ada kempen. Cipta kempen pertama anda!
-                </p>
-              </div>
+              <EmptyState icon="🕌" msg="Belum ada kempen. Mulakan kempen pertama anda hari ini." />
             ) : (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                {campaigns.map(c => {
-                  const progress = Math.min(
-                    Math.round((c.collected_amount / c.target_amount) * 100), 100
-                  )
-                  const daysLeft = Math.max(
-                    0, Math.ceil((new Date(c.end_date) - new Date()) / (1000 * 60 * 60 * 24))
-                  )
-                  const targetReached = c.collected_amount >= c.target_amount
+              campaigns.map(c => {
+                const progress = Math.min(Math.round((c.collected_amount / c.target_amount) * 100), 100)
+                const daysLeft = Math.max(0, Math.ceil((new Date(c.end_date) - new Date()) / (1000 * 60 * 60 * 24)))
+                const targetReached = c.collected_amount >= c.target_amount
 
-                  return (
-                    <div key={c.id} style={{
-                      backgroundColor: '#ffffff',
-                      borderRadius: '12px',
-                      padding: '20px 24px',
-                      boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
-                      border: `1px solid ${targetReached && c.status === 'ACTIVE' ? '#c9a84c' : '#e8e4dc'}`
-                    }}>
-                      <div style={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'flex-start',
-                        marginBottom: '12px'
-                      }}>
-                        <div>
-                          <div style={{ fontSize: '16px', fontWeight: '700', color: '#1a1a1a' }}>
-                            {c.title}
-                          </div>
-                          <div style={{ fontSize: '13px', color: '#9ca3af', marginTop: '2px' }}>
-                            {new Date(c.start_date).toLocaleDateString('ms-MY')} —{' '}
-                            {new Date(c.end_date).toLocaleDateString('ms-MY')}
-                          </div>
-                        </div>
-                        <span style={{
-                          fontSize: '11px',
-                          fontWeight: '700',
-                          padding: '4px 10px',
-                          borderRadius: '20px',
-                          backgroundColor: c.status === 'ACTIVE' ? '#dcfce7' : '#fef3c7',
-                          color: c.status === 'ACTIVE' ? '#166534' : '#92400e'
-                        }}>
-                          {c.status === 'ACTIVE' ? 'AKTIF' : 'SELESAI'}
-                        </span>
+                return (
+                  <div key={c.id} style={{
+                    backgroundColor: '#ffffff',
+                    borderRadius: '20px',
+                    padding: '28px',
+                    boxShadow: '0 10px 30px rgba(0,0,0,0.02)',
+                    border: `1px solid ${targetReached && c.status === 'ACTIVE' ? '#c9a84c' : '#f1f5f9'}`
+                  }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px' }}>
+                      <div>
+                        <h3 style={{ fontSize: '18px', fontWeight: '800', color: '#0f2d1f', margin: '0 0 4px' }}>{c.title}</h3>
+                        <p style={{ fontSize: '13px', color: '#94a3b8', fontWeight: '500' }}>
+                          Tempoh: {new Date(c.start_date).toLocaleDateString('ms-MY')} — {new Date(c.end_date).toLocaleDateString('ms-MY')}
+                        </p>
                       </div>
-
-                      {/* PROGRESS */}
-                      <div style={{
-                        backgroundColor: '#f0ede8',
-                        borderRadius: '999px',
-                        height: '8px',
-                        marginBottom: '8px',
-                        overflow: 'hidden'
+                      <span style={{
+                        fontSize: '11px',
+                        fontWeight: '800',
+                        padding: '6px 14px',
+                        borderRadius: '30px',
+                        letterSpacing: '0.5px',
+                        backgroundColor: c.status === 'ACTIVE' ? '#f0fdf4' : '#fefce8',
+                        color: c.status === 'ACTIVE' ? '#166534' : '#92400e'
                       }}>
-                        <div style={{
-                          width: `${progress}%`,
-                          height: '100%',
-                          backgroundColor: c.status === 'COMPLETED' ? '#c9a84c' : '#1d6a4e',
-                          borderRadius: '999px'
-                        }} />
-                      </div>
-
-                      <div style={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center'
-                      }}>
-                        <div style={{ fontSize: '13px', color: '#6b7280' }}>
-                          <strong style={{ color: '#1d6a4e' }}>{formatRM(c.collected_amount)}</strong>
-                          {' '}daripada {formatRM(c.target_amount)} ({progress}%)
-                        </div>
-                        <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                          {c.status === 'ACTIVE' && (
-                            <>
-                              <span style={{ fontSize: '12px', color: '#9ca3af' }}>
-                                {daysLeft} hari lagi
-                              </span>
-                              <button
-                                onClick={() => endCampaign(c.id)}
-                                style={{
-                                  padding: '6px 14px',
-                                  backgroundColor: targetReached ? '#c9a84c' : '#ffffff',
-                                  color: targetReached ? '#ffffff' : '#dc2626',
-                                  border: `1px solid ${targetReached ? '#c9a84c' : '#dc2626'}`,
-                                  borderRadius: '6px',
-                                  cursor: 'pointer',
-                                  fontSize: '12px',
-                                  fontWeight: '700'
-                                }}
-                              >
-                                {targetReached ? '✓ Tamat & Selesai' : 'Tamat Kempen'}
-                              </button>
-                            </>
-                          )}
-                        </div>
-                      </div>
-
-                      {targetReached && c.status === 'ACTIVE' && (
-                        <div style={{
-                          marginTop: '10px',
-                          padding: '8px 12px',
-                          backgroundColor: '#fef3c7',
-                          borderRadius: '6px',
-                          fontSize: '12px',
-                          color: '#92400e',
-                          fontWeight: '600'
-                        }}>
-                          🎉 Alhamdulillah! Sasaran telah dicapai. Sila tamatkan kempen ini.
-                        </div>
-                      )}
+                        {c.status === 'ACTIVE' ? 'SEDANG BERJALAN' : 'SELESAI'}
+                      </span>
                     </div>
-                  )
-                })}
-              </div>
+
+                    {/* PROGRESS BAR */}
+                    <div style={{ height: '12px', backgroundColor: '#f1f5f9', borderRadius: '10px', marginBottom: '16px', overflow: 'hidden' }}>
+                      <div style={{ width: `${progress}%`, height: '100%', backgroundColor: c.status === 'COMPLETED' ? '#c9a84c' : '#1d6a4e', borderRadius: '10px', transition: 'width 1s ease-out' }} />
+                    </div>
+
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <div style={{ fontSize: '14px', color: '#64748b', fontWeight: '500' }}>
+                        <strong style={{ color: '#0f2d1f', fontSize: '16px' }}>{formatRM(c.collected_amount)}</strong> daripada {formatRM(c.target_amount)} ({progress}%)
+                      </div>
+                      
+                      <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                        {c.status === 'ACTIVE' && (
+                          <>
+                            <span style={{ fontSize: '13px', color: '#94a3b8', fontWeight: '600' }}>{daysLeft} hari lagi</span>
+                            <button
+                              onClick={() => endCampaign(c.id)}
+                              style={{
+                                padding: '10px 20px',
+                                background: targetReached ? '#c9a84c' : 'transparent',
+                                color: targetReached ? '#ffffff' : '#ef4444',
+                                border: `1.5px solid ${targetReached ? '#c9a84c' : '#ef4444'}`,
+                                borderRadius: '10px',
+                                cursor: 'pointer',
+                                fontSize: '13px',
+                                fontWeight: '800',
+                                transition: 'all 0.2s'
+                              }}
+                            >
+                              {targetReached ? '✓ Tamat Kempen' : 'Tamatkan'}
+                            </button>
+                          </>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                )
+              })
             )}
           </div>
-        )}
-
-        {/* DONATIONS TAB */}
-        {activeTab === 'DONATIONS' && (
-          <div>
-            {donations.length === 0 ? (
-              <div style={{
-                textAlign: 'center',
-                padding: '60px',
-                backgroundColor: '#ffffff',
-                borderRadius: '12px',
-                border: '1px solid #e8e4dc'
-              }}>
-                <p style={{ color: '#6b7280', fontSize: '14px' }}>Belum ada derma diterima.</p>
-              </div>
-            ) : (
-              <div style={{
-                backgroundColor: '#ffffff',
-                borderRadius: '12px',
-                border: '1px solid #e8e4dc',
-                overflow: 'hidden'
-              }}>
-                <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-                  <thead>
-                    <tr style={{ backgroundColor: '#f8f7f4' }}>
-                      {['Penderma', 'Telefon', 'Kempen', 'Jumlah', 'Bersih ke Masjid', 'Tarikh'].map(h => (
-                        <th key={h} style={{
-                          padding: '12px 16px',
-                          textAlign: 'left',
-                          fontSize: '12px',
-                          fontWeight: '700',
-                          color: '#6b7280',
-                          borderBottom: '1px solid #e8e4dc'
-                        }}>{h}</th>
-                      ))}
+        ) : (
+          /* DONATIONS LIST */
+          <div style={{ backgroundColor: '#ffffff', borderRadius: '20px', border: '1px solid #f1f5f9', overflow: 'hidden', boxShadow: '0 10px 30px rgba(0,0,0,0.02)' }}>
+            <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+              <thead>
+                <tr style={{ backgroundColor: '#f8fafc', borderBottom: '1px solid #f1f5f9' }}>
+                  {['Penderma', 'Kempen', 'Jumlah', 'Penerimaan Bersih', 'Tarikh'].map(h => (
+                    <th key={h} style={{ padding: '18px 24px', textAlign: 'left', fontSize: '12px', fontWeight: '800', color: '#64748b', textTransform: 'uppercase', letterSpacing: '1px' }}>{h}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {donations.length === 0 ? (
+                  <tr><td colSpan="5" style={{ padding: '40px', textAlign: 'center', color: '#94a3b8' }}>Tiada rekod derma ditemui.</td></tr>
+                ) : (
+                  donations.map((d, i) => (
+                    <tr key={d.id} style={{ borderBottom: '1px solid #f8fafc', transition: 'background 0.2s' }}>
+                      <td style={{ padding: '18px 24px' }}>
+                        <div style={{ fontWeight: '800', color: '#0f2d1f', fontSize: '14px' }}>{d.donor_name}</div>
+                        <div style={{ fontSize: '12px', color: '#94a3b8' }}>{d.donor_phone}</div>
+                      </td>
+                      <td style={{ padding: '18px 24px', fontSize: '13px', color: '#64748b', fontWeight: '600' }}>{d.campaign?.title}</td>
+                      <td style={{ padding: '18px 24px', fontSize: '14px', fontWeight: '800', color: '#0f2d1f' }}>{formatRM(d.amount_paid)}</td>
+                      <td style={{ padding: '18px 24px', fontSize: '14px', fontWeight: '800', color: '#1d6a4e' }}>{formatRM(d.net_to_premise)}</td>
+                      <td style={{ padding: '18px 24px', fontSize: '13px', color: '#94a3b8', fontWeight: '500' }}>{new Date(d.created_at).toLocaleDateString('ms-MY')}</td>
                     </tr>
-                  </thead>
-                  <tbody>
-                    {donations.map((d, i) => (
-                      <tr key={d.id} style={{
-                        borderBottom: '1px solid #f0ede8',
-                        backgroundColor: i % 2 === 0 ? '#ffffff' : '#fafaf9'
-                      }}>
-                        <td style={{ padding: '12px 16px', fontSize: '14px', color: '#1a1a1a', fontWeight: '600' }}>
-                          {d.donor_name}
-                        </td>
-                        <td style={{ padding: '12px 16px', fontSize: '13px', color: '#6b7280' }}>
-                          {d.donor_phone}
-                        </td>
-                        <td style={{ padding: '12px 16px', fontSize: '13px', color: '#6b7280' }}>
-                          {d.campaign?.title}
-                        </td>
-                        <td style={{ padding: '12px 16px', fontSize: '14px', fontWeight: '700', color: '#1a1a1a' }}>
-                          {formatRM(d.amount_paid)}
-                        </td>
-                        <td style={{ padding: '12px 16px', fontSize: '14px', fontWeight: '700', color: '#1d6a4e' }}>
-                          {formatRM(d.net_to_premise)}
-                        </td>
-                        <td style={{ padding: '12px 16px', fontSize: '12px', color: '#9ca3af' }}>
-                          {new Date(d.created_at).toLocaleDateString('ms-MY')}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            )}
+                  ))
+                )}
+              </tbody>
+            </table>
           </div>
         )}
       </div>
 
-      {/* CREATE CAMPAIGN MODAL */}
+      {/* CREATE MODAL - APPLE STYLE */}
       {showCreate && (
-        <div style={{
-          position: 'fixed',
-          inset: 0,
-          backgroundColor: 'rgba(0,0,0,0.5)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          zIndex: 1000,
-          padding: '24px'
-        }}>
-          <div style={{
-            backgroundColor: '#ffffff',
-            borderRadius: '16px',
-            padding: '32px',
-            width: '100%',
-            maxWidth: '520px',
-            maxHeight: '90vh',
-            overflowY: 'auto'
-          }}>
-            <div style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              marginBottom: '24px'
-            }}>
-              <h2 style={{ fontSize: '20px', fontWeight: '800', color: '#1a1a1a', margin: 0 }}>
-                Cipta Kempen Baru
-              </h2>
-              <button
-                onClick={() => setShowCreate(false)}
-                style={{
-                  background: 'none',
-                  border: 'none',
-                  fontSize: '20px',
-                  cursor: 'pointer',
-                  color: '#6b7280'
-                }}
-              >✕</button>
+        <div style={{ position: 'fixed', inset: 0, backgroundColor: 'rgba(15, 45, 31, 0.4)', backdropFilter: 'blur(8px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 2000, padding: '24px' }}>
+          <div style={{ backgroundColor: '#ffffff', borderRadius: '28px', padding: '40px', width: '100%', maxWidth: '560px', maxHeight: '90vh', overflowY: 'auto', boxShadow: '0 30px 60px rgba(0,0,0,0.2)' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px' }}>
+              <h2 style={{ fontSize: '24px', fontWeight: '900', color: '#0f2d1f', letterSpacing: '-1px' }}>Kempen Baru</h2>
+              <button onClick={() => setShowCreate(false)} style={{ background: '#f1f5f9', border: 'none', width: '36px', height: '36px', borderRadius: '50%', cursor: 'pointer', color: '#64748b', fontWeight: '800' }}>✕</button>
             </div>
 
             {createSuccess ? (
-              <div style={{ textAlign: 'center', padding: '20px' }}>
-                <div style={{ fontSize: '40px', marginBottom: '12px' }}>✅</div>
-                <p style={{ fontWeight: '700', color: '#1d6a4e' }}>Kempen berjaya dicipta!</p>
+              <div style={{ textAlign: 'center', padding: '40px' }}>
+                <div style={{ fontSize: '60px', marginBottom: '20px' }}>✅</div>
+                <p style={{ fontSize: '18px', fontWeight: '800', color: '#1d6a4e' }}>Kempen Berjaya Dicipta!</p>
               </div>
             ) : (
               <form onSubmit={handleCreate}>
-
-                <div style={{ marginBottom: '16px' }}>
-                  <label style={labelStyle}>Tajuk Kempen *</label>
-                  <input
-                    value={form.title}
-                    onChange={e => setForm({ ...form, title: e.target.value })}
-                    placeholder="cth: Baik Pulih Bumbung Masjid"
-                    required
-                    style={inputStyle}
-                  />
+                <div style={{ marginBottom: '20px' }}>
+                  <label style={labelStyle}>Tajuk Kempen</label>
+                  <input value={form.title} onChange={e => setForm({ ...form, title: e.target.value })} placeholder="cth: Infaq Jumaat" required style={inputStyle} />
+                </div>
+                <div style={{ marginBottom: '20px' }}>
+                  <label style={labelStyle}>Tujuan & Huraian</label>
+                  <textarea value={form.purpose} onChange={e => setForm({ ...form, purpose: e.target.value })} placeholder="Huraikan tujuan kempen..." required rows={3} style={{ ...inputStyle, resize: 'none' }} />
+                </div>
+                <div style={{ marginBottom: '20px' }}>
+                  <label style={labelStyle}>Sasaran Kutipan (RM)</label>
+                  <input type="number" value={form.target_amount} onChange={e => setForm({ ...form, target_amount: e.target.value })} placeholder="50000" required style={inputStyle} />
+                </div>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '20px' }}>
+                  <div>
+                    <label style={labelStyle}>Tarikh Mula</label>
+                    <input type="date" value={form.start_date} onChange={e => setForm({ ...form, start_date: e.target.value })} required style={inputStyle} />
+                  </div>
+                  <div>
+                    <label style={labelStyle}>Tarikh Tamat</label>
+                    <input type="date" value={form.end_date} onChange={e => setForm({ ...form, end_date: e.target.value })} required style={inputStyle} />
+                  </div>
+                </div>
+                <div style={{ marginBottom: '32px' }}>
+                  <label style={labelStyle}>Poster Kempen</label>
+                  <input type="file" accept="image/*" ref={imageRef} onChange={e => setForm({ ...form, image: e.target.files[0] })} style={{ ...inputStyle, padding: '12px' }} />
                 </div>
 
-                <div style={{ marginBottom: '16px' }}>
-                  <label style={labelStyle}>Tujuan Kempen *</label>
-                  <textarea
-                    value={form.purpose}
-                    onChange={e => setForm({ ...form, purpose: e.target.value })}
-                    placeholder="Huraikan tujuan kempen ini secara terperinci..."
-                    required
-                    rows={4}
-                    style={{ ...inputStyle, resize: 'vertical' }}
-                  />
-                </div>
-
-                <div style={{ marginBottom: '16px' }}>
-                  <label style={labelStyle}>Sasaran Kutipan (RM) *</label>
-                  <input
-                    type="number"
-                    min="100"
-                    value={form.target_amount}
-                    onChange={e => setForm({ ...form, target_amount: e.target.value })}
-                    placeholder="cth: 50000"
-                    required
-                    style={inputStyle}
-                  />
-                </div>
-
-                <div style={{
-                  display: 'grid',
-                  gridTemplateColumns: '1fr 1fr',
-                  gap: '12px',
-                  marginBottom: '16px'
+                <button type="submit" disabled={creating} style={{
+                  width: '100%', padding: '18px', backgroundColor: creating ? '#94a3b8' : '#1d6a4e', color: '#ffffff', border: 'none', borderRadius: '16px', cursor: 'pointer', fontSize: '16px', fontWeight: '800', boxShadow: '0 10px 25px rgba(29, 106, 78, 0.2)'
                 }}>
-                  <div>
-                    <label style={labelStyle}>Tarikh Mula *</label>
-                    <input
-                      type="date"
-                      value={form.start_date}
-                      onChange={e => setForm({ ...form, start_date: e.target.value })}
-                      required
-                      style={inputStyle}
-                    />
-                  </div>
-                  <div>
-                    <label style={labelStyle}>Tarikh Tamat *</label>
-                    <input
-                      type="date"
-                      value={form.end_date}
-                      onChange={e => setForm({ ...form, end_date: e.target.value })}
-                      required
-                      style={inputStyle}
-                    />
-                  </div>
-                </div>
-
-                <div style={{ marginBottom: '24px' }}>
-                  <label style={labelStyle}>Gambar Kempen</label>
-                  <input
-                    type="file"
-                    accept="image/*"
-                    ref={imageRef}
-                    onChange={e => setForm({ ...form, image: e.target.files[0] })}
-                    style={{ ...inputStyle, padding: '8px' }}
-                  />
-                </div>
-
-                {createError && (
-                  <div style={{
-                    backgroundColor: '#fef2f2',
-                    border: '1px solid #fecaca',
-                    color: '#dc2626',
-                    padding: '10px',
-                    borderRadius: '8px',
-                    fontSize: '13px',
-                    marginBottom: '16px'
-                  }}>
-                    {createError}
-                  </div>
-                )}
-
-                <button
-                  type="submit"
-                  disabled={creating}
-                  style={{
-                    width: '100%',
-                    padding: '14px',
-                    backgroundColor: creating ? '#9ca3af' : '#1d6a4e',
-                    color: '#ffffff',
-                    border: 'none',
-                    borderRadius: '10px',
-                    cursor: creating ? 'not-allowed' : 'pointer',
-                    fontSize: '15px',
-                    fontWeight: '700'
-                  }}
-                >
-                  {creating ? 'Sedang Mencipta...' : 'Cipta Kempen'}
+                  {creating ? 'Mencipta Kempen...' : 'Lancarkan Kempen'}
                 </button>
               </form>
             )}
@@ -570,22 +376,14 @@ export default function Dashboard() {
   )
 }
 
-const labelStyle = {
-  display: 'block',
-  fontSize: '13px',
-  fontWeight: '600',
-  color: '#374151',
-  marginBottom: '6px'
+function EmptyState({ icon, msg }) {
+  return (
+    <div style={{ textAlign: 'center', padding: '80px 40px', backgroundColor: '#ffffff', borderRadius: '24px', border: '2px dashed #f1f5f9' }}>
+      <div style={{ fontSize: '50px', marginBottom: '16px' }}>{icon}</div>
+      <p style={{ color: '#94a3b8', fontSize: '15px', fontWeight: '600' }}>{msg}</p>
+    </div>
+  )
 }
 
-const inputStyle = {
-  width: '100%',
-  padding: '10px 12px',
-  border: '1.5px solid #e8e4dc',
-  borderRadius: '8px',
-  fontSize: '14px',
-  color: '#1a1a1a',
-  backgroundColor: '#fafaf9',
-  outline: 'none',
-  boxSizing: 'border-box'
-}
+const labelStyle = { display: 'block', fontSize: '14px', fontWeight: '700', color: '#1e293b', marginBottom: '8px' }
+const inputStyle = { width: '100%', padding: '14px 16px', border: '2px solid #f1f5f9', borderRadius: '12px', fontSize: '15px', backgroundColor: '#f8fafc', outline: 'none', boxSizing: 'border-box' }
