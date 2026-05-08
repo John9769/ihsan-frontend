@@ -47,38 +47,54 @@ export default function Login() {
   }
 
   return (
-    <main style={{ backgroundColor: '#f8f7f4', minHeight: '100vh', fontFamily: 'sans-serif' }}>
+    <main style={{ 
+      backgroundColor: '#fdfdfc', 
+      minHeight: '100vh', 
+      fontFamily: '"Plus Jakarta Sans", sans-serif',
+      backgroundImage: 'linear-gradient(to bottom, #f0fdf4 0%, #fdfdfc 400px)' 
+    }}>
       <Navbar />
 
-      <div style={{ maxWidth: '420px', margin: '80px auto', padding: '0 24px' }}>
+      <div style={{ maxWidth: '440px', margin: '0 auto', paddingTop: '180px', paddingBottom: '100px', paddingLeft: '24px', paddingRight: '24px' }}>
 
-        {/* HEADER */}
-        <div style={{ textAlign: 'center', marginBottom: '32px' }}>
+        {/* HEADER SECTION */}
+        <div style={{ textAlign: 'center', marginBottom: '40px' }}>
           <div style={{
-            display: 'inline-block',
-            backgroundColor: '#1d6a4e',
-            width: '48px',
-            height: '48px',
-            borderRadius: '12px',
-            lineHeight: '48px',
-            fontSize: '22px',
-            marginBottom: '12px'
-          }}>🔐</div>
-          <h1 style={{ fontSize: '26px', fontWeight: '800', color: '#1a1a1a', margin: '0 0 8px' }}>
+            backgroundColor: '#ffffff',
+            width: '70px',
+            height: '70px',
+            borderRadius: '20px',
+            margin: '0 auto 24px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            boxShadow: '0 10px 25px rgba(29, 106, 78, 0.1)',
+            border: '1px solid rgba(29, 106, 78, 0.05)'
+          }}>
+            {/* MODERN SECURE KEY ICON */}
+            <img 
+              src="https://cdn-icons-png.flaticon.com/512/2889/2889676.png" 
+              alt="Login Icon" 
+              style={{ width: '35px', height: '35px', opacity: 0.9 }}
+            />
+          </div>
+          
+          <h1 style={{ fontSize: '32px', fontWeight: '900', color: '#0f2d1f', margin: '0 0 10px', letterSpacing: '-1.5px' }}>
             Log Masuk
           </h1>
-          <p style={{ color: '#6b7280', fontSize: '14px' }}>
-            Masuk ke akaun IHSAN anda
+          <p style={{ color: '#64748b', fontSize: '15px', fontWeight: '500' }}>
+            Akses dashboard digital IHSAN anda
           </p>
         </div>
 
-        {/* TOGGLE */}
+        {/* PREMIUM TOGGLE SWITCH */}
         <div style={{
           display: 'flex',
-          backgroundColor: '#e8e4dc',
-          borderRadius: '10px',
-          padding: '4px',
-          marginBottom: '24px'
+          backgroundColor: 'rgba(29, 106, 78, 0.05)',
+          borderRadius: '14px',
+          padding: '6px',
+          marginBottom: '32px',
+          border: '1px solid rgba(29, 106, 78, 0.05)'
         }}>
           {['PREMISE', 'ADMIN'].map(type => (
             <button
@@ -86,15 +102,16 @@ export default function Login() {
               onClick={() => setLoginType(type)}
               style={{
                 flex: 1,
-                padding: '10px',
+                padding: '12px',
                 border: 'none',
-                borderRadius: '8px',
+                borderRadius: '10px',
                 cursor: 'pointer',
-                fontSize: '13px',
-                fontWeight: '700',
+                fontSize: '14px',
+                fontWeight: '800',
                 backgroundColor: loginType === type ? '#1d6a4e' : 'transparent',
-                color: loginType === type ? '#ffffff' : '#6b7280',
-                transition: 'all 0.2s'
+                color: loginType === type ? '#ffffff' : '#64748b',
+                boxShadow: loginType === type ? '0 4px 12px rgba(29, 106, 78, 0.2)' : 'none',
+                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
               }}
             >
               {type === 'PREMISE' ? 'Masjid / Surau' : 'Admin'}
@@ -102,89 +119,74 @@ export default function Login() {
           ))}
         </div>
 
-        {/* FORM */}
+        {/* LOGIN FORM CARD */}
         <form
           onSubmit={handleSubmit}
           style={{
             backgroundColor: '#ffffff',
-            borderRadius: '16px',
-            padding: '32px',
-            boxShadow: '0 4px 24px rgba(0,0,0,0.08)'
+            borderRadius: '24px',
+            padding: '40px',
+            boxShadow: '0 20px 50px rgba(0,0,0,0.04)',
+            border: '1px solid #f1f5f9'
           }}
         >
-          <div style={{ marginBottom: '16px' }}>
+          <div style={{ marginBottom: '20px' }}>
             <label style={{
               display: 'block',
-              fontSize: '13px',
-              fontWeight: '600',
-              color: '#374151',
-              marginBottom: '6px'
+              fontSize: '14px',
+              fontWeight: '700',
+              color: '#1e293b',
+              marginBottom: '8px',
+              paddingLeft: '4px'
             }}>
-              Emel <span style={{ color: '#dc2626' }}>*</span>
+              Alamat Emel
             </label>
             <input
               name="email"
               type="email"
               value={form.email}
               onChange={handleChange}
-              placeholder="emel@masjid.com"
+              placeholder="cth: admin@masjid.com"
               required
-              style={{
-                width: '100%',
-                padding: '10px 12px',
-                border: '1.5px solid #e8e4dc',
-                borderRadius: '8px',
-                fontSize: '14px',
-                color: '#1a1a1a',
-                backgroundColor: '#fafaf9',
-                outline: 'none',
-                boxSizing: 'border-box'
-              }}
+              style={inputStyle}
             />
           </div>
 
-          <div style={{ marginBottom: '24px' }}>
+          <div style={{ marginBottom: '32px' }}>
             <label style={{
               display: 'block',
-              fontSize: '13px',
-              fontWeight: '600',
-              color: '#374151',
-              marginBottom: '6px'
+              fontSize: '14px',
+              fontWeight: '700',
+              color: '#1e293b',
+              marginBottom: '8px',
+              paddingLeft: '4px'
             }}>
-              Kata Laluan <span style={{ color: '#dc2626' }}>*</span>
+              Kata Laluan
             </label>
             <input
               name="password"
               type="password"
               value={form.password}
               onChange={handleChange}
-              placeholder="Kata laluan anda"
+              placeholder="••••••••"
               required
-              style={{
-                width: '100%',
-                padding: '10px 12px',
-                border: '1.5px solid #e8e4dc',
-                borderRadius: '8px',
-                fontSize: '14px',
-                color: '#1a1a1a',
-                backgroundColor: '#fafaf9',
-                outline: 'none',
-                boxSizing: 'border-box'
-              }}
+              style={inputStyle}
             />
           </div>
 
           {error && (
             <div style={{
-              backgroundColor: '#fef2f2',
-              border: '1px solid #fecaca',
-              color: '#dc2626',
-              padding: '12px 16px',
-              borderRadius: '8px',
+              backgroundColor: '#fff1f2',
+              border: '1px solid #ffe4e6',
+              color: '#e11d48',
+              padding: '14px',
+              borderRadius: '12px',
               fontSize: '13px',
-              marginBottom: '16px'
+              fontWeight: '700',
+              marginBottom: '20px',
+              textAlign: 'center'
             }}>
-              {error}
+              ⚠️ {error}
             </div>
           )}
 
@@ -193,30 +195,46 @@ export default function Login() {
             disabled={loading}
             style={{
               width: '100%',
-              padding: '14px',
-              backgroundColor: loading ? '#9ca3af' : '#1d6a4e',
+              padding: '18px',
+              backgroundColor: loading ? '#cbd5e1' : '#1d6a4e',
               color: '#ffffff',
               border: 'none',
-              borderRadius: '10px',
+              borderRadius: '14px',
               cursor: loading ? 'not-allowed' : 'pointer',
-              fontSize: '15px',
-              fontWeight: '700'
+              fontSize: '16px',
+              fontWeight: '800',
+              boxShadow: loading ? 'none' : '0 10px 25px rgba(29, 106, 78, 0.25)',
+              transition: 'all 0.3s ease'
             }}
           >
-            {loading ? 'Sedang Log Masuk...' : 'Log Masuk'}
+            {loading ? 'Sila Tunggu...' : 'Masuk ke Dashboard'}
           </button>
 
-          <p style={{ textAlign: 'center', fontSize: '13px', color: '#6b7280', marginTop: '16px' }}>
+          <p style={{ textAlign: 'center', fontSize: '14px', color: '#64748b', marginTop: '28px', fontWeight: '500' }}>
             Belum ada akaun?{' '}
             <span
               onClick={() => router.push('/daftar')}
-              style={{ color: '#1d6a4e', fontWeight: '700', cursor: 'pointer' }}
+              style={{ color: '#1d6a4e', fontWeight: '800', cursor: 'pointer', textDecoration: 'underline' }}
             >
-              Daftar Sekarang
+              Daftar Premis Sekarang
             </span>
           </p>
         </form>
       </div>
     </main>
   )
+}
+
+const inputStyle = {
+  width: '100%',
+  padding: '16px 20px',
+  border: '2px solid #f1f5f9',
+  borderRadius: '14px',
+  fontSize: '15px',
+  color: '#0f172a',
+  backgroundColor: '#f8fafc',
+  outline: 'none',
+  boxSizing: 'border-box',
+  transition: 'all 0.3s ease',
+  fontFamily: 'inherit'
 }
