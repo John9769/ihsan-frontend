@@ -22,28 +22,30 @@ export default function CampaignCard({ campaign }) {
       onClick={() => router.push(`/kempen/${campaign.id}`)}
       style={{
         backgroundColor: '#ffffff',
-        borderRadius: '12px',
+        borderRadius: '20px',
         overflow: 'hidden',
         cursor: 'pointer',
-        boxShadow: '0 2px 8px rgba(0,0,0,0.07)',
-        border: '1px solid #e8e4dc',
-        transition: 'transform 0.2s, box-shadow 0.2s',
+        boxShadow: '0 4px 20px rgba(0,0,0,0.04)',
+        border: '1px solid #f1f5f9',
+        transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+        fontFamily: '"Plus Jakarta Sans", sans-serif'
       }}
       onMouseEnter={e => {
-        e.currentTarget.style.transform = 'translateY(-4px)'
-        e.currentTarget.style.boxShadow = '0 8px 24px rgba(0,0,0,0.12)'
+        e.currentTarget.style.transform = 'translateY(-8px)'
+        e.currentTarget.style.boxShadow = '0 20px 40px rgba(15, 45, 31, 0.08)'
       }}
       onMouseLeave={e => {
         e.currentTarget.style.transform = 'translateY(0)'
-        e.currentTarget.style.boxShadow = '0 2px 8px rgba(0,0,0,0.07)'
+        e.currentTarget.style.boxShadow = '0 4px 20px rgba(0,0,0,0.04)'
       }}
     >
-      {/* IMAGE */}
+      {/* IMAGE - Fixed 16:9 Aspect Ratio */}
       <div style={{
         width: '100%',
-        height: '180px',
-        backgroundColor: '#e8e4dc',
-        overflow: 'hidden'
+        aspectRatio: '16 / 9',
+        backgroundColor: '#f8fafc',
+        overflow: 'hidden',
+        position: 'relative'
       }}>
         {campaign.image_url ? (
           <img
@@ -58,58 +60,80 @@ export default function CampaignCard({ campaign }) {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            backgroundColor: '#f0ede8'
+            backgroundColor: '#f1f5f9'
           }}>
-            <span style={{ fontSize: '40px' }}>🕌</span>
+            <span style={{ fontSize: '48px' }}>🕌</span>
+          </div>
+        )}
+        
+        {/* DAYS LEFT BADGE */}
+        {campaign.status === 'ACTIVE' && (
+          <div style={{
+            position: 'absolute',
+            top: '12px',
+            right: '12px',
+            backgroundColor: 'rgba(255, 255, 255, 0.9)',
+            backdropFilter: 'blur(4px)',
+            padding: '6px 12px',
+            borderRadius: '10px',
+            fontSize: '11px',
+            fontWeight: '800',
+            color: '#1d6a4e',
+            boxShadow: '0 4px 10px rgba(0,0,0,0.1)'
+          }}>
+            {daysLeft} HARI LAGI
           </div>
         )}
       </div>
 
       {/* CONTENT */}
-      <div style={{ padding: '16px' }}>
+      <div style={{ padding: '24px' }}>
 
-        {/* PREMISE NAME */}
+        {/* PREMISE TAG */}
         <div style={{
-          fontSize: '11px',
-          color: '#1d6a4e',
-          fontWeight: '700',
-          marginBottom: '4px',
-          letterSpacing: '0.5px'
+          fontSize: '10px',
+          color: '#c9a84c',
+          fontWeight: '800',
+          marginBottom: '8px',
+          letterSpacing: '1.5px',
+          textTransform: 'uppercase'
         }}>
           {campaign.premise?.name?.toLowerCase().startsWith(campaign.premise?.type?.toLowerCase()) 
-  ? campaign.premise.name 
-  : `${campaign.premise?.type} ${campaign.premise?.name}`}
+            ? campaign.premise.name 
+            : `${campaign.premise?.type} ${campaign.premise?.name}`}
         </div>
 
         {/* TITLE */}
-        <div style={{
-          fontSize: '15px',
-          fontWeight: '700',
-          color: '#1a1a1a',
-          marginBottom: '8px',
-          lineHeight: '1.4',
+        <h3 style={{
+          fontSize: '18px',
+          fontWeight: '900',
+          color: '#0f2d1f',
+          marginBottom: '20px',
+          lineHeight: '1.3',
+          letterSpacing: '-0.5px',
+          height: '46px', // Ensures vertical alignment in grid
           display: '-webkit-box',
           WebkitLineClamp: 2,
           WebkitBoxOrient: 'vertical',
           overflow: 'hidden'
         }}>
           {campaign.title}
-        </div>
+        </h3>
 
         {/* PROGRESS BAR */}
         <div style={{
-          backgroundColor: '#f0ede8',
-          borderRadius: '999px',
-          height: '8px',
-          marginBottom: '8px',
+          backgroundColor: '#f1f5f9',
+          borderRadius: '10px',
+          height: '10px',
+          marginBottom: '12px',
           overflow: 'hidden'
         }}>
           <div style={{
             width: `${progress}%`,
             height: '100%',
             backgroundColor: campaign.status === 'COMPLETED' ? '#c9a84c' : '#1d6a4e',
-            borderRadius: '999px',
-            transition: 'width 0.5s ease'
+            borderRadius: '10px',
+            transition: 'width 1s cubic-bezier(0.4, 0, 0.2, 1)'
           }} />
         </div>
 
@@ -117,28 +141,28 @@ export default function CampaignCard({ campaign }) {
         <div style={{
           display: 'flex',
           justifyContent: 'space-between',
-          alignItems: 'center',
-          marginBottom: '12px'
+          alignItems: 'flex-end',
+          marginBottom: '24px'
         }}>
           <div>
-            <div style={{ fontSize: '15px', fontWeight: '800', color: '#1d6a4e' }}>
+            <div style={{ fontSize: '18px', fontWeight: '900', color: '#1d6a4e', lineHeight: '1' }}>
               {formatRM(campaign.collected_amount)}
             </div>
-            <div style={{ fontSize: '11px', color: '#9ca3af' }}>
-              daripada {formatRM(campaign.target_amount)}
+            <div style={{ fontSize: '12px', color: '#94a3b8', marginTop: '4px', fontWeight: '500' }}>
+              Sasaran {formatRM(campaign.target_amount)}
             </div>
           </div>
           <div style={{ textAlign: 'right' }}>
-            <div style={{ fontSize: '15px', fontWeight: '800', color: '#1a1a1a' }}>
+            <div style={{ fontSize: '18px', fontWeight: '900', color: '#0f2d1f', lineHeight: '1' }}>
               {progress}%
             </div>
-            <div style={{ fontSize: '11px', color: '#9ca3af' }}>
-              {campaign.status === 'COMPLETED' ? 'Selesai ✓' : `${daysLeft} hari lagi`}
+            <div style={{ fontSize: '12px', color: '#94a3b8', marginTop: '4px', fontWeight: '500' }}>
+              Terkumpul
             </div>
           </div>
         </div>
 
-        {/* DONATE BUTTON */}
+        {/* ACTION BUTTON */}
         {campaign.status === 'ACTIVE' && (
           <button
             onClick={e => {
@@ -147,14 +171,16 @@ export default function CampaignCard({ campaign }) {
             }}
             style={{
               width: '100%',
-              padding: '10px',
+              padding: '14px',
               backgroundColor: '#1d6a4e',
               color: '#ffffff',
               border: 'none',
-              borderRadius: '8px',
+              borderRadius: '12px',
               cursor: 'pointer',
-              fontSize: '13px',
-              fontWeight: '700'
+              fontSize: '14px',
+              fontWeight: '800',
+              boxShadow: '0 4px 12px rgba(29, 106, 78, 0.2)',
+              transition: 'all 0.2s ease'
             }}
           >
             Derma Sekarang
@@ -164,13 +190,14 @@ export default function CampaignCard({ campaign }) {
         {campaign.status === 'COMPLETED' && (
           <div style={{
             width: '100%',
-            padding: '10px',
-            backgroundColor: '#fef3c7',
+            padding: '14px',
+            backgroundColor: '#fefce8',
             color: '#c9a84c',
-            borderRadius: '8px',
+            borderRadius: '12px',
             fontSize: '13px',
-            fontWeight: '700',
-            textAlign: 'center'
+            fontWeight: '800',
+            textAlign: 'center',
+            border: '1px solid rgba(201, 168, 76, 0.2)'
           }}>
             ✓ Sasaran Dicapai — Alhamdulillah
           </div>
